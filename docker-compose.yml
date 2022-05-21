@@ -4,12 +4,34 @@ services:
   db:
     image: database
     build:
-      context: .
+      context: ./database
       dockerfile: ./Dockerfile
       target: development
     container_name: database
+    environment:
+      POSTGRES_USER: "ecdbadmin"
+      POSTGRES_PASSWORD: "P@ssword"
+      POSTGRES_DG: "ecdatastorage"
     networks:
       - ecommerce
+
+  api:
+    image: api
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+      target: delevopment
+    container_name: api
+  
+  # proxy:
+  #   image: proxy
+  #   build:
+  #     context: ./nginx
+  #     dockerfile: ./Dockerfile
+  #     target: development
+  #   container_name: proxy
+  #   ports:
+  #     - 80:80
 
 networks:
   ecommerce:
