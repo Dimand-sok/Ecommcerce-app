@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+  db:
+    image: database
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: development
+    container_name: database
+    networks:
+      - ecommerce
+
+networks:
+  ecommerce:
+    driver: bridge
