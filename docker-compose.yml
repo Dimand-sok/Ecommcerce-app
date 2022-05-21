@@ -20,18 +20,18 @@ services:
     build:
       context: ./api
       dockerfile: ./Dockerfile
-      target: delevopment
+      target: development
     container_name: api
   
-  # proxy:
-  #   image: proxy
-  #   build:
-  #     context: ./nginx
-  #     dockerfile: ./Dockerfile
-  #     target: development
-  #   container_name: proxy
-  #   ports:
-  #     - 80:80
+  proxy:
+    image: proxy
+    build:
+      context: ./nginx
+      dockerfile: ./Dockerfile
+      target: development
+    container_name: proxy
+    ports:
+      - 80:80
 
 networks:
   ecommerce:
