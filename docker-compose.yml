@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 
 services:
   db:
@@ -10,8 +10,8 @@ services:
     container_name: database
     environment:
       POSTGRES_USER: "ecdbadmin"
-      POSTGRES_PASSWORD: "P@ssword"
-      POSTGRES_DG: "ecdatastorage"
+      POSTGRES_PASSWORD: "testP1ssW0rd"
+      POSTGRES_DB: "ecdatastorage"
     networks:
       - ecommerce
 
@@ -22,6 +22,8 @@ services:
       dockerfile: ./Dockerfile
       target: development
     container_name: api
+    networks:
+      - ecommerce
   
   proxy:
     image: proxy
@@ -30,8 +32,15 @@ services:
       dockerfile: ./Dockerfile
       target: development
     container_name: proxy
+    links:
+      - "api:api"
     ports:
       - 80:80
+      - 443:443
+    networks:
+      - ecommerce
+    depends_on:
+      - api
 
 networks:
   ecommerce:
