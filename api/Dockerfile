@@ -1,4 +1,4 @@
-FROM python:3.8 AS build
+FROM python:3.9 AS build
 
 WORKDIR /api
 
