@@ -21,6 +21,10 @@ services:
       context: ./api
       dockerfile: ./Dockerfile
       target: development
+    environment:
+      DB_NAME: ecdatastorage
+      DB_USERNAME: ecdbadmin
+      DB_PASSWORD: testP1ssW0rd
     container_name: api
     networks:
       - ecommerce
@@ -28,6 +32,7 @@ services:
       - 5678:5678
     volumes:
       - ./api:/api
+      - ./api/entrypoint.sh:/entrypoint.sh
   
   proxy:
     image: proxy

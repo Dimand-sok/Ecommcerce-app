@@ -1,10 +1,10 @@
-from app import create_app
+from app import create_app,DevConfigs
 
 from route import auth_route
 
-current_app = create_app(dict())
+current_app = create_app(DevConfigs)
 
 current_app.register_blueprint(auth_route)
 
 if __name__ == "__main__":
-    current_app.run(debug=True, host='0.0.0.0', port=5000)
+    current_app.run(host=DevConfigs.HOST, port=DevConfigs.PORT)
