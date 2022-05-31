@@ -9,4 +9,4 @@ class countryModel(Based, baseModel):
     __tablename__ = "country"
     
     country_name = Column(String(64))
-    city = Column(Integer, ForeignKey('city.id'), nullable=False)
+    cities = relationship('cityModel',backref='countryModel',lazy=True, cascade="all, delete")

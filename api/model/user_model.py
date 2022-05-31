@@ -1,3 +1,4 @@
+from argparse import ArgumentError
 from sqlalchemy import Column,String, Integer, Boolean
 
 from app.database import Based
@@ -22,5 +23,34 @@ class userModel(Based,baseModel):
     commune = Column(String(64))
     phone_number = Column(Integer(13))
     active = Column(Boolean)
+    
+    def __init__(self, schema):
+        if not isinstance(schema, dict):
+            raise ArgumentError("Schema should be a diction")
+
+        for key, value in schema.items():
+            if hasattr(self, key) and getattr(self, key) != value:
+                setattr(self, key, value)
+                
+    @property
+    def email_address(self):
+        # condiction
+        # security check 1
+        # security check 2
+        return self.__email
+
+    @email_address.setter
+    def email(self, email):
+        # condiction
+        # security check 1
+        # security check 2
+        self.__email = email
+
+
+    def set_password(self, password):
+        # condiction
+        # security check 1
+        # hash password before save
+        self.__password = password
     
     
