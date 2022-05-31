@@ -12,4 +12,11 @@ class productModel(Based):
     regular_price = Column(Float(16))
     sale_price = Column(Float(16))
     price = Column(Float(16))
+    #Array of attributes assigned to the product
+    attributes =  Column()
+    image_id = Column(Integer(64))
+    product_url = Column(String(128))
+    
+    #Product variations
+    
     

@@ -1,9 +1,13 @@
 
-from sqlalchemy import Column, String, Integer
-from app.database import Based
+from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy.orm import relationship
 
-class districtModel(Based):
+from app.database import Based
+from .base_model import baseModel
+
+class districtModel(Based, baseModel):
     __tablename__ = "district"
     
     district_name = Column(String(64))
-    city_id = Column(Integer(16))
+    city = relationship('city', backref='district', lazy=True, cascade="all, delete")
+    commune_id = Column(Integer,ForeignKey('commune.id'), nullable=False )
