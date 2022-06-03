@@ -21,7 +21,7 @@ class userModel(Based,baseModel):
     city = Column(String(64))
     district = Column(String(64))
     commune = Column(String(64))
-    phone_number = Column(Integer(13))
+    phone_number = Column(Integer)
     active = Column(Boolean)
     
     def __init__(self, schema):

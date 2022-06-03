@@ -12,12 +12,12 @@ class productModel(Based, baseModel):
     product_name = Column(String(64), nullable=False)
     description = Column(String(512))
     short_descripton = Column(String(256))
-    regular_price = Column(Float(16))
-    sale_price = Column(Float(16))
-    price = Column(Float(16))
+    regular_price = Column(Float)
+    sale_price = Column(Float)
+    price = Column(Float)
     #Array of attributes assigned to the product
-    attributes =  Column()
-    image_id = Column(Integer(64))
+    # attributes =  Column()
+    image_id = Column(Integer)
     product_url = Column(String(128))
     category_id = Column(Integer, ForeignKey("category.id"))
     
@@ -26,12 +26,12 @@ class productModel(Based, baseModel):
     
     #Product variations
     
-    
-    
-    product_supplier_table = Table(
-        "association",
-        Column("pro_id", ForeignKey("product.id")),
-        Column("sup_id", ForeignKey("supplier.id")),
+        
+    association_table = Table(
+        "product_supplier",
+        Based.metadata,
+        Column("product_id", ForeignKey("product.id")),
+        Column("suplier_id", ForeignKey("supplier.id")),
     )     
     
     
