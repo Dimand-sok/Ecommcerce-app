@@ -15,8 +15,6 @@ class productModel(Based, baseModel):
     regular_price = Column(Float)
     sale_price = Column(Float)
     price = Column(Float)
-    #Array of attributes assigned to the product
-    # attributes =  Column()
     image_id = Column(Integer)
     product_url = Column(String(128))
     category_id = Column(Integer, ForeignKey("category.id"))
@@ -25,7 +23,8 @@ class productModel(Based, baseModel):
     suppliers = relationship("supplierModel", secondary="product_supplier_table")
     
     #Product variations
-    
+    product_reviews = relationship('previewModel', backref='productModel',lazy=True, cascade='all, delete')
+    product_variations = relationship('pVariationModel', backref='productModel',lazy=True, cascade='all, delete')
         
     association_table = Table(
         "product_supplier",
