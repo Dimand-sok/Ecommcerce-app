@@ -6,5 +6,5 @@ current_app = create_app(DevConfigs)
 
 current_app.register_blueprint(auth_route)
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     current_app.run(host=DevConfigs.HOST, port=DevConfigs.PORT)
