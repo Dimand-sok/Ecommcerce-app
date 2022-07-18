@@ -1,10 +1,10 @@
-import imp
-from model import userModel
+
+from model import UserModel
 from .based_dao import BaseDAO
 
 
 class UserDao(BaseDAO):
-    def __init__(self, model=userModel, close_on_exit=False):
+    def __init__(self, model=UserModel, close_on_exit=False):
         super().__init__(model, close_on_exit)
         
     def add(self, schema):

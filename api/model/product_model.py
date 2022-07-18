@@ -29,8 +29,8 @@ class productModel(Based, baseModel):
     association_table = Table(
         "product_supplier",
         Based.metadata,
-        Column("product_id", ForeignKey("product.id")),
-        Column("suplier_id", ForeignKey("supplier.id")),
+        Column("productid", ForeignKey("product.id")),
+        Column("suplier_id", ForeignKey("supplier.id"))
     )     
     
     

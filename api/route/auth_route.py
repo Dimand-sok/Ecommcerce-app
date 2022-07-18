@@ -9,7 +9,7 @@ auth_route = Blueprint("auth_route",__name__, url_prefix="/api")
 
 @auth_route.route("/auth/register",methods=["GET", "POST"])
 def auth_register():
-   
+    print("working")
     if not request.is_json:
        abort(400)
     
