@@ -1,6 +1,8 @@
 
 from flask import Blueprint, make_response, request, abort, render_template
 from dao import UserDao
+from schema import UserSchema
+from utils import validate_request
 
 
 auth_route = Blueprint("auth_route",__name__, url_prefix="/api")
@@ -8,17 +10,15 @@ auth_route = Blueprint("auth_route",__name__, url_prefix="/api")
 
 
 @auth_route.route("/auth/register",methods=["GET", "POST"])
-def auth_register():
-    print("working")
-    if not request.is_json:
-       abort(400)
-    
-    _user = request.get_json()
-    
+@validate_request(("UserSchema"))
+def auth_register(user=None):
     with UserDao() as dao:
-        user = dao.add(_user)
-    return make_response({ "message":"Add successed"})
-   
+        _user = dao.add(user)
+
+        user_json = dao.jsonify(UserSchema, _user)
+
+    return make_response(user_json, 201)
+
    
     
 @auth_route.route("/login",methods=["GET", "POST"])
