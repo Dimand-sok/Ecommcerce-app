@@ -1,4 +1,5 @@
 from sqlalchemy import Column,String, Integer, Boolean
+from passlib.hash import sha256_crypt
 
 from app.database import Based
 from .base_model import baseModel
