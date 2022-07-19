@@ -1,4 +1,4 @@
-from pandas import value_counts
+
 from stringcase import camelcase, snakecase
 from marshmallow import pre_load, post_dump, fields, Schema, EXCLUDE
 
@@ -20,7 +20,7 @@ class JsMixin(Schema):
             for key, value in data.items()
         }
         
-    @pre_dump
+    @post_dump
     def to_camelcase(self, data, **kwargs):
         """Convert object key from  snakeCase to Camelcase"""
         
@@ -34,6 +34,6 @@ class JsMixin(Schema):
         }
         
 class Minxin(JsMixin):
-    id = fields.int()
+    id = fields.Int()
     create_date = fields.DateTime("%d-%m-%Y %H:%M", dump_only=True)
     update_date = fields.DateTime("%d-%m-%Y %H:%M", dump_only=True)

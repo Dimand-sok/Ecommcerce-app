@@ -1,8 +1,8 @@
 from marshmallow import fields, validate
-from .base_schema import Mixin
+from .base_schema import Minxin
 
 
-class UserSchema(Mixin):
+class UserSchema(Minxin):
     username = fields.String(required=True, validate=validate.Length(min=8, max=36))
     password = fields.String(
         required=True, validate=validate.Length(min=16, max=128), load_only=True
