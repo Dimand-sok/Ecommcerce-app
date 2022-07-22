@@ -92,7 +92,7 @@ class UserModel(Based, baseModel):
 
     @property
     def password(self):
-        pass
+        return self.__password
 
     @password.setter
     def password(self, password):
