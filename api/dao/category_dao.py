@@ -8,8 +8,7 @@ class CategoryDao(BaseDAO):
     def add(self, schema):
         model = self._model(schema)
         model.set_categoryName(schema.get("category_name"))
-        model.get("category_desc")
-        
+              
         self._session.add(model)
         self.commit()
         return model
