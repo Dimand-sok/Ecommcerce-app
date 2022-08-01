@@ -1,5 +1,5 @@
 from .base_model import baseModel
-# from .category_model import categoryModel
+from .category_model import CategoryModel
 # from .city_model import cityModel
 # from .commune_model import communeModel
 # from .country_model import countryModel
@@ -12,4 +12,4 @@ from .base_model import baseModel
 from .user_model import UserModel
 
 
-__all__ = ["baseModel","UserModel"]
+__all__ = ["baseModel","UserModel","CategoryModel"]
