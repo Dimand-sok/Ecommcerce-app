@@ -1,5 +1,4 @@
-from crypt import methods
-from urllib import response
+from api.utils.decorator import verify_authentication
 from flask import Blueprint, make_response, request, abort, render_template
 from flask_jwt_extended import (
     create_access_token,
@@ -72,7 +71,7 @@ def auth_logout():
 
 
 @auth_route.route("/test-auth", methods=["GET"])
-@jwt_required()
+@verify_authentication("admin")
 
 def auth_test():
     return make_response({"message": "user logged in"}) 
