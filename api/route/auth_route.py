@@ -1,5 +1,5 @@
-from api.utils.decorator import verify_authentication
-from flask import Blueprint, make_response, request, abort, render_template
+
+from flask import Blueprint, make_response, request, abort, render_template, session
 from flask_jwt_extended import (
     create_access_token,
     create_refresh_token,
@@ -12,7 +12,8 @@ from flask_jwt_extended import (
 
 from dao import UserDao
 from schema import UserSchema
-from utils import validate_request
+from utils import validate_request, verify_authentication, generate_hash, generate_otp
+from app import notification_signal
 
 
 auth_route = Blueprint("auth_route",__name__, url_prefix="/api")
@@ -67,6 +68,52 @@ def auth_logout():
     unset_jwt_cookies(response)
     
     return make_response(response, 200)
+
+
+#user change password
+@auth_route.route("/auth/change-password", methods=["POST"])
+@validate_request("UserCredentialSchema", only=["username","password","new_password","otp"])
+
+def auth_change_password(user_credential=None):
+    
+    if not session.get("current_user"):
+        with UserDao as dao:
+            _user = dao.get_by_username(user_credential.get("username"))
+            #check if _user return none or password is not correct, then abort
+            if not _user or not _user.verify_password(user_credential.get("password")):
+                abort(403)
+            
+            otp = generate_otp()
+            notification_signal.send("sms", otp=otp, phone=_user.phone)
+            
+            #store new password in session and update later
+            session["current_user"]={
+                "username": _user.username,
+                "otp": generate_hash(otp),
+                "new_password":user_credential.get("new_password")
+            }
+        return make_response({"message": "Please verify your phone number"},200)
+    
+    #verify otp valid or not
+    current_user = session.get("current_user")
+    
+    with UserDao as dao:
+        _user = dao.get_by_username(current_user.get("username"))
+        
+        if not _user:
+            abort(500)
+            
+    _user.set_hashed_password(current_user.get("new_password"))
+    dao.commit()
+    
+    session["current_user"] = None
+    return make_response({"message": "Password successfully updated"}, 200) 
+    
+        
+
+
+
+
 
 
 

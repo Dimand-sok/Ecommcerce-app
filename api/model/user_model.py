@@ -103,6 +103,10 @@ class UserModel(Based, baseModel):
     
     def verify_password(self, password):
         return sha256_crypt.verify(password,self.__password)
+    
+    def set_hashed_password(self, hashed_password):
+        # make password is ready hashed
+        self.__password = hashed_password
 
     def __init__(self, schema):
         for key, value in schema.items():
