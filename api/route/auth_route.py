@@ -77,7 +77,7 @@ def auth_logout():
 def auth_change_password(user_credential=None):
     
     if not session.get("current_user"):
-        with UserDao as dao:
+        with UserDao() as dao:
             _user = dao.get_by_username(user_credential.get("username"))
             #check if _user return none or password is not correct, then abort
             if not _user or not _user.verify_password(user_credential.get("password")):
@@ -97,7 +97,7 @@ def auth_change_password(user_credential=None):
     #verify otp valid or not
     current_user = session.get("current_user")
     
-    with UserDao as dao:
+    with UserDao() as dao:
         _user = dao.get_by_username(current_user.get("username"))
         
         if not _user:

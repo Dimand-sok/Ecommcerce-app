@@ -66,6 +66,9 @@ def validate_request(*schemas, partial=False, **options):
 
             except ValidationError as e:
                 abort(400)
+                
+            except Exception:
+                abort(500)
 
             return function(*args, **kwargs, **schema_objects)
 
