@@ -1,5 +1,6 @@
 from requests import post
 from json import dumps
+import smtplib, ssl
 
 
 class notification:
@@ -25,7 +26,20 @@ class SMSnotification(notification):
             print(resp.__dict__)
         
 class Emailnotification(notification):
-    def send(self):
+    def __init__(self):
+        self.sender = "dimand.sok@gmail.com"
+        self.__password = "015880990"
+        self.ctx = ssl.create_default_context()
+        
+    
+    def send(self, **kwargs):
+        recipient = kwargs.get("email")
+        message = """
+                Hello from Python.
+                """
+        with smtplib.SMTP_SSL("smtp.gmail.com", port=465, context=self.ctx) as server:
+            server.login(self.sender, self.__password)
+            server.sendmail(self.sender, recipient, message)
         print("send via Email")
         
 def get_notification(type="email"):

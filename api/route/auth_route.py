@@ -72,7 +72,7 @@ def auth_logout():
 
 #user change password
 @auth_route.route("/auth/change-password", methods=["POST"])
-@validate_request("UserCredentialSchema", only=["username","password","new_password","otp"])
+@validate_request("UserCredentialSchema", only=["username","password","new_password","otp","email"])
 
 def auth_change_password(user_credential=None):
     
